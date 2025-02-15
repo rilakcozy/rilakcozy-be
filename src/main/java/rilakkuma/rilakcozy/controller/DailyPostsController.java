@@ -1,6 +1,7 @@
 package rilakkuma.rilakcozy.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/posts")
 public class DailyPostsController {
+    @Autowired
     private final PostService postService;
 
     @GetMapping("/daily")
@@ -38,13 +40,30 @@ public class DailyPostsController {
         Post savedPost = postService.save(request);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(ApiResponse.success(HttpStatus.CREATED.value(),"success to daily post", savedPost));
+                .body(ApiResponse.success(HttpStatus.CREATED.value(),"success to make the daily post", savedPost));
     }
 
     @PatchMapping("/daily/{categoryId}/{postId}")
-    public ResponseEntity<Post> editDailyPost(@PathVariable long categoryId, @PathVariable long postId, @RequestBody EditPostRequest request){
+    public ResponseEntity<ApiResponse<Post>> editDailyPost(@PathVariable long categoryId, @PathVariable long postId, @RequestBody EditPostRequest request){
         Post editPost = postService.edit(categoryId, postId, request);
 
-        return ResponseEntity.ok().body(editPost);
+        return ResponseEntity.ok().body(
+                ApiResponse.success(
+                        HttpStatus.OK.value(),
+                        "success to edit the daily post",
+                        editPost));
+    }
+
+    @DeleteMapping("/daily/{categoryId}/{postId}")
+    public ResponseEntity<ApiResponse<Void>> deleteDailyPost(@PathVariable long categoryId, @PathVariable long postId){
+        postService.deleteByCategoryIdAndPostId(categoryId, postId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+                ApiResponse.success(
+                        HttpStatus.OK.value(),
+                        "success to delete the daily post",
+                        null
+                )
+        );
     }
 }

@@ -5,7 +5,7 @@ import rilakkuma.rilakcozy.domain.Post;
 
 import java.util.Optional;
 
-public interface PostRepository extends JpaRepository<Post, Long> {
+public interface PostRepository extends JpaRepository<Post, Long> , CustomPostRepository{
     Long findByCategoryId(long categoryId);
     Optional<Post> findByCategoryIdAndPostId(long categoryId, long postId);
 }
