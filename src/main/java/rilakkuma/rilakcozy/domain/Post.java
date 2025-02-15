@@ -1,26 +1,28 @@
 package rilakkuma.rilakcozy.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @NoArgsConstructor
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Post {
     @Id
-    @Column(name="post_id", updatable=false)
-    private Long post_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="postId", updatable=false)
+    private Long postId;
 
-    @Column(name="category_id", updatable=false)
-    private Long category_id;
+    @Column(name="categoryId", updatable=false)
+    private Long categoryId;
 
     @Column(name="title", updatable = true)
     private String title;
@@ -28,33 +30,31 @@ public class Post {
     @Column(name="content", updatable = true)
     private String content;
 
-    @Column(name="user_id", updatable = false)
-    private String user_id;
+    @Column(name="userId", updatable = false)
+    private String userId;
 
     @CreatedDate //엔티티가 생성될 때 생성 시간 저장
-    @Column(name= "created_at")
+    @Column(name= "createdAt")
     private LocalDateTime createdAt;
 
     @LastModifiedDate //엔티티가 수정될 때 수정 시간 저장
-    @Column(name = "updated_at")
+    @Column(name = "updatedAt")
     private LocalDateTime updatedAt;
 
     @Builder //빌더 패턴으로 객체 생성
-    public Post(Long post_id, Long category_id, String title, String content, String user_id, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.post_id = post_id;
-        this.category_id = category_id;
+    public Post(Long postId, Long categoryId, String title, String content, String userId, LocalDateTime createdAt) {
+        this.postId = postId;
+        this.categoryId = categoryId;
         this.title = title;
         this.content = content;
-        this.user_id = user_id;
+        this.userId = userId;
         this.createdAt = createdAt;
+//        this.updatedAt = updatedAt;
+    }
+
+    public void update(String title, String content, LocalDateTime updatedAt){
+        this.title = title;
+        this.content = content;
         this.updatedAt = updatedAt;
     }
-
-    public void update(String title, String content){
-        this.title = title;
-        this.content = content;
-    }
-
-
-
 }
