@@ -11,22 +11,23 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 public class AddPostRequest {
-    private Long post_id;
-    private Long category_id;
+    private Long categoryId;
+    private Long postId;
     private String title;
     private String content;
-    private String user_id;
-    private LocalDateTime created_at;
+    private String userId;
+    private LocalDateTime createdAt;
 //    private LocalDateTime updated_at;
 
     public Post toEntity() {
+
         return Post.builder()
-                .post_id(post_id)
-                .category_id(category_id)
+                .categoryId(categoryId)
+                .postId(postId)
                 .title(title)
                 .content(content)
-                .user_id(user_id)
-                .createdAt(created_at)
+                .userId(userId)
+                .createdAt(createdAt)
                 .build();
 
     }

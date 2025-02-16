@@ -11,21 +11,21 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 public class PostResponse {
-    private Long post_id;
-    private Long category_id;
+    private Long categoryId;
+    private Long postId;
     private String title;
     private String content;
-    private String user_id;
-    private LocalDateTime created_at;
-    private LocalDateTime updated_at;
+    private String userId;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public PostResponse(Post post) {
-        this.post_id = post.getPost_id();
-        this.category_id = post.getCategory_id();
+        this.categoryId = post.getCategoryId();
+        this.postId = post.getPostId();
         this.title = post.getTitle();
         this.content = post.getContent();
-        this.user_id = post.getUser_id();
-        this.created_at = post.getCreatedAt();
-        this.updated_at = post.getUpdatedAt();
+        this.userId = post.getUserId();
+        this.createdAt = post.getCreatedAt();
+        this.updatedAt = post.getUpdatedAt();
     }
 }
