@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import rilakkuma.rilakcozy.domain.Post;
 import rilakkuma.rilakcozy.dto.AddPostRequest;
 import rilakkuma.rilakcozy.dto.EditPostRequest;
-import rilakkuma.rilakcozy.repository.PostCategorysRepository;
 import rilakkuma.rilakcozy.repository.PostRepository;
 
 import java.util.List;
@@ -18,7 +17,6 @@ public class PostService extends PostServiceImpl {
 
     @Autowired
     private final PostRepository postRepository;
-    private final PostCategorysRepository postCategorysRepository;
 
     //게시판 글 전체 조회 메서드
     public List<Post> findAll() {
